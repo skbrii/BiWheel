@@ -2,6 +2,9 @@
 //#include "Arduino.h"
 #include "biWheel.h"
 
+#define LM 0
+#define RM 1
+
 biWheel::biWheel(int in1, int in2, int in3, int in4)
 {
   pinMode(in1, OUTPUT);
@@ -57,7 +60,7 @@ void biWheel::leftMotorForwardPWM(int spdl){
 
 void biWheel::leftMotorBackwardPWM(int spdl){
 	_spdl=map(spdl,0,100,150,255);
-  digitalWrite(_in1,HIGH);
+  digitalWrite(_in1,LOW);
   analogWrite(_in2,_spdl);
 }
 
@@ -69,19 +72,26 @@ digitalWrite(_in4,LOW);
 
 void biWheel::rightMotorBackwardPWM(int spdr){
 	_spdr=map(spdr,0,100,150,255);
-  digitalWrite(_in3,HIGH);
+  digitalWrite(_in3,LOW);
   analogWrite(_in4,_spdr);
 }
 
 void biWheel::leftMotor(int spdl){
 	if ( spdl == 0 ){ leftMotorStop(); }
-	else if ( spdl > 0 ){ leftMotorForwardPWM(abs(spdl)); }
-	else { leftMotorBackwardPWM(spdl); }
+	else if ( spdl > 0 ){ leftMotorForwardPWM(spdl); }
+	else if ( spdl < 0 ) { leftMotorBackwardPWM(abs(spdl)); }
 }
 
 void biWheel::rightMotor(int spdr){
 	if ( spdr == 0 ){ rightMotorStop(); }
-	else if ( spdr > 0 ){ rightMotorForwardPWM(abs(spdr)); }
-	else { rightMotorBackwardPWM(spdr); }
+	else if ( spdr > 0 ){ rightMotorForwardPWM(spdr); }
+	else if ( spdr < 0 ) { rightMotorBackwardPWM(abs(spdr)); }
 }
 
+void biWheel::drive(boolean mtr, int spd){
+	_mtr = mtr;
+	_spd = spd;	
+	if ( _mtr == 0 ){ rightMotor(_spd);}
+	else if ( _mtr == 1 ){ leftMotor(_spd);}
+}
+	
