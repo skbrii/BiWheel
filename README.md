@@ -41,9 +41,9 @@ biWheel
 
 Свяжитесь с нами
 -------
-[Официальный сайт](www.skbrii.ru)
+[Официальный сайт](http://www.skbrii.ru)
 
-[Группа Вконтакте](www.vk.com/skbrii)
+[Группа Вконтакте](https://www.vk.com/skbrii)
 
 
 
