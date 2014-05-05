@@ -1,6 +1,6 @@
 #include "biWheel.h" //подключение библиотеки
 
-biWheel chassis = biWheel(5,6,9,10); //создание объекта класса biWheel
+biWheel chassis = biWheel4(5,6,9,10); //создание объекта класса biWheel
 //аргументы - цифровые пины Arduino, к которым подключены IN1, IN2, IN3, IN4 H-моста
 
 void setup(){} //остаётся пустым
