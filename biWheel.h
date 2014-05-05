@@ -56,7 +56,7 @@ class biWheel4
 class biWheel6
 {
 	public:
-		biWheel4(int in1, int in2, int in3, int in4, int ena, int enb);
+		biWheel6(int in1, int in2, int in3, int in4, int ena, int enb);
 		void leftMotorForward();
 		void leftMotorBackward();
 		void leftMotorStop();
