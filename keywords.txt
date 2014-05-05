@@ -1,4 +1,5 @@
-biWheel	KEYWORD1
+biWheel4	KEYWORD1
+biWheel6	KEYWORD1
 leftMotorForward	KEYWORD2
 leftMotorBackward	KEYWORD2
 leftMotorStop	KEYWORD2
