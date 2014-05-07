@@ -19,7 +19,7 @@ Lesser General Public License for more details.
 
 
 #include "stdlib.h"
-#include "biWheel.h"
+#include "BiWheel.h"
 
 #define LM 0
 #define RM 1
