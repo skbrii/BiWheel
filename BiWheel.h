@@ -1,5 +1,5 @@
-/* biWheel.h
-biWheel is Arduino library for chassis with two motors driven by l293d or l298d H-bridge.  
+/* BiWheel.h
+BiWheel is Arduino library for chassis with two motors driven by l293d or l298d H-bridge.  
 
 Created by Ilya S. Dubkov, April 24, 2014
 
@@ -14,8 +14,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 Lesser General Public License for more details.
 */
 
-#ifndef biWheel_h
-#define biWheel_h
+#ifndef BiWheel_h
+#define BiWheel_h
 
 #include "Arduino.h"
 
