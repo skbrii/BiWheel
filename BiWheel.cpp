@@ -14,17 +14,15 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 Lesser General Public License for more details.
 */
 
-
-
-
-
 #include "stdlib.h"
 #include "BiWheel.h"
 
 #define LM 0
 #define RM 1
+#define LRM 2
+#define RLM 2
 
-biWheel4::biWheel4(int in1, int in2, int in3, int in4)
+biWheel::biWheel(int in1, int in2, int in3, int in4)
 {
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
@@ -66,11 +64,6 @@ void biWheel::rightMotorStop(){
 	digitalWrite(_in4,LOW);
 }
 
-
-
-
-
-
 void biWheel::leftMotorForwardPWM(int spdl){
 	_spdl = map(spdl,0,100,150,255);
 	digitalWrite(_in2,LOW);
@@ -110,6 +103,7 @@ void biWheel::rightMotor(int spdr){
 void biWheel::drive(boolean mtr, int spd){
 	_mtr = mtr;
 	_spd = spd;	
-	if ( _mtr == 0 ){ rightMotor(_spd);}
+	if ( _mtr == 0 ){ rightMotor(_spd); }
 	else if ( _mtr == 1 ){ leftMotor(_spd);}
+	else if ( _mtr == 2 ){ leftMotor(_spdr); rightMotor(_spdr); }
 }
