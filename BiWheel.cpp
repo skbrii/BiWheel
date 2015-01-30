@@ -105,5 +105,5 @@ void biWheel::drive(boolean mtr, int spd){
 	_spd = spd;	
 	if ( _mtr == 0 ){ rightMotor(_spd); }
 	else if ( _mtr == 1 ){ leftMotor(_spd);}
-	else if ( _mtr == 2 ){ leftMotor(_spdr); rightMotor(_spdr); }
+	else if ( _mtr == 2 ){ leftMotor(_spd); rightMotor(_spd); }
 }
