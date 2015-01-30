@@ -22,6 +22,9 @@ Lesser General Public License for more details.
 #define LRM 2
 #define RLM 2
 
+#define PWM_MIN 150
+#define PWM_MAX 255
+
 biWheel::biWheel(int in1, int in2, int in3, int in4)
 {
 	pinMode(in1, OUTPUT);
@@ -65,25 +68,25 @@ void biWheel::rightMotorStop(){
 }
 
 void biWheel::leftMotorForwardPWM(int spdl){
-	_spdl = map(spdl,0,100,150,255);
+	_spdl = map(spdl,0,100,PWM_MIN,PWM_MAX);
 	digitalWrite(_in2,LOW);
 	analogWrite(_in1,_spdl);
 }
 
 void biWheel::leftMotorBackwardPWM(int spdl){
-	_spdl=map(spdl,0,100,150,255);
+	_spdl=map(spdl,0,100,PWM_MIN,PWM_MAX);
 	digitalWrite(_in1,LOW);
 	analogWrite(_in2,_spdl);
 }
 
 void biWheel::rightMotorForwardPWM(int spdr){
-	_spdr=map(spdr,0,100,150,255);
+	_spdr=map(spdr,0,100,PWM_MIN,PWM_MAX);
 	digitalWrite(_in4,LOW);
 	analogWrite(_in3,_spdr);
 }
 
 void biWheel::rightMotorBackwardPWM(int spdr){
-	_spdr=map(spdr,0,100,150,255);
+	_spdr=map(spdr,0,100,PWM_MIN,PWM_MAX);
 	digitalWrite(_in3,LOW);
 	analogWrite(_in4,_spdr);
 }
