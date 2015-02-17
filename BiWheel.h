@@ -41,19 +41,15 @@ class biWheel
 {
 	public:
 		biWheel(int, int, int, int);
-		void leftMotorForward();
-		void leftMotorBackward();
 		void leftMotorStop();
-		void rightMotorForward();
-		void rightMotorBackward();
 		void rightMotorStop();
 		void leftMotorForwardPWM(int);
 		void leftMotorBackwardPWM(int);
 		void rightMotorForwardPWM(int);
 		void rightMotorBackwardPWM(int);
-		void drive(int, int);
 		void leftMotor(int);
 		void rightMotor(int);
+		void drive(int, int);
 
 	private:
 		int _in1;
