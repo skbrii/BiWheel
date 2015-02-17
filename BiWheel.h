@@ -29,18 +29,19 @@
 #ifndef BiWheel_h
 #define BiWheel_h
 
+#define PWM_MIN 150
+#define PWM_MAX 255
+
 #define LM 0
 #define RM 1
 #define LRM 2
 #define RLM 2
 
-#define PWM_MIN 150
-#define PWM_MAX 255
-
 class biWheel
 {
 	public:
 		biWheel(int, int, int, int);
+		inline int spdToPWMduty(int);
 		void leftMotorStop();
 		void rightMotorStop();
 		void leftMotorForwardPWM(int);
@@ -60,7 +61,6 @@ class biWheel
 		int _spdr;
 		int _spd;
 		int _mtr;
-
 };
 
 #endif

@@ -36,10 +36,15 @@ biWheel::biWheel(int in1, int in2, int in3, int in4)
 	pinMode(in2, OUTPUT);
 	pinMode(in3, OUTPUT);
 	pinMode(in4, OUTPUT);
+
 	_in1 = in1;
 	_in2 = in2;
 	_in3 = in3;
 	_in4 = in4;
+}
+
+inline int biWheel::spdToPWMduty(int spdtpwmdt){
+	return map(spdtpwmdt, 0, 100, PWM_MIN, PWM_MAX);
 }
 
 void biWheel::leftMotorStop(){
@@ -47,54 +52,81 @@ void biWheel::leftMotorStop(){
 	digitalWrite(_in2, LOW);
 }
 
-
 void biWheel::rightMotorStop(){
 	digitalWrite(_in3, LOW);
 	digitalWrite(_in4, LOW);
 }
 
 void biWheel::leftMotorForwardPWM(int spdl){
-	_spdl = map(spdl, 0, 100, PWM_MIN, PWM_MAX);
+
+	_spdl = spdToPWMduty(spdl);
+
 	digitalWrite(_in2, LOW);
 	analogWrite(_in1, _spdl);
 }
 
 void biWheel::leftMotorBackwardPWM(int spdl){
-	_spdl = map(spdl, 0, 100, PWM_MIN, PWM_MAX);
+
+	_spdl = spdToPWMduty(spdl);
+
 	digitalWrite(_in1, LOW);
 	analogWrite(_in2, _spdl);
 }
 
 void biWheel::rightMotorForwardPWM(int spdr){
-	_spdr = map(spdr, 0, 100, PWM_MIN, PWM_MAX);
+
+	_spdr = spdToPWMduty(spdr);
+
 	digitalWrite(_in4, LOW);
 	analogWrite(_in3, _spdr);
 }
 
 void biWheel::rightMotorBackwardPWM(int spdr){
-	_spdr = map(spdr, 0, 100, PWM_MIN, PWM_MAX);
+
+	_spdr = spdToPWMduty(spdr);
+
 	digitalWrite(_in3, LOW);
 	analogWrite(_in4, _spdr);
 }
 
 void biWheel::leftMotor(int spdl){
-	if ( spdl == 0 ){ leftMotorStop(); }
-	else if ( spdl > 0 ){ leftMotorForwardPWM(spdl); }
-	else { leftMotorBackwardPWM(abs(spdl)); }
+	if ( spdl == 0 ){
+		leftMotorStop();
+	}
+	else if ( spdl > 0 ){
+		leftMotorForwardPWM(spdl);
+	}
+	else {
+		leftMotorBackwardPWM(abs(spdl));
+	}
 }
 
 void biWheel::rightMotor(int spdr){
-	if ( spdr == 0 ){ rightMotorStop(); }
-	else if ( spdr > 0 ){ rightMotorForwardPWM(spdr); }
-	else { rightMotorBackwardPWM(abs(spdr)); }
-
+	if ( spdr == 0 ){
+		rightMotorStop();
+	}
+	else if ( spdr > 0 ){
+		rightMotorForwardPWM(spdr);
+	}
+	else {
+		rightMotorBackwardPWM(abs(spdr));
+	}
 }
 
 void biWheel::drive(int mtr, int spd){
+
 	_mtr = mtr;
 	_spd = spd;
-	if ( _mtr == 0 ){ rightMotor(_spd); }
-	else if ( _mtr == 1 ){ leftMotor(_spd); }
-	else if ( _mtr == 2 ){ leftMotor(_spd); rightMotor(_spd); }
+
+	if ( _mtr == 0 ){
+		rightMotor(_spd);
+	}
+	else if ( _mtr == 1 ){
+		leftMotor(_spd);
+	}
+	else if ( _mtr == 2 ){
+		leftMotor(_spd);
+		rightMotor(_spd);
+	}
 	else return;
 }
