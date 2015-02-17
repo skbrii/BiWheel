@@ -1,55 +1,69 @@
-/* BiWheel.h
-BiWheel is Arduino library for chassis with two motors driven by l293d or l298d H-bridge.  
+/*
 
-Created by Ilya S. Dubkov, April 24, 2014
+@ Filename: BiWheel.h
 
-This library is free software; you can redistribute it and/or
-modify it under the terms of the GNU Lesser General Public
-License as published by the Free Software Foundation; either
-version 2.1 of the License, or (at your option) any later version.
+@ BiWheel is an Arduino library for chassis with two motors
+@ driven by L293 or L298 H-bridge.
 
-This library is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-Lesser General Public License for more details.
+@ Created by Ilya S. Dubkov
+@ e-mail: dubkov@skbrii.ru
+@ April 24, 2014
+
+@ Last update: Feb 17, 2015
+@ by Ilya S. Dubkov
+
+@ License information:
+
+@ This library is free software; you can redistribute it and/or
+@ modify it under the terms of the GNU Lesser General Public
+@ License as published by the Free Software Foundation; either
+@ version 2.1 of the License, or (at your option) any later version.
+
+@ This library is distributed in the hope that it will be useful,
+@ but WITHOUT ANY WARRANTY; without even the implied warranty of
+@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+@ Lesser General Public License for more details.
+
 */
 
 #ifndef BiWheel_h
 #define BiWheel_h
 
-#include "Arduino.h"
-
 #define LM 0
 #define RM 1
+#define LRM 2
+#define RLM 2
 
+#define PWM_MIN 150
+#define PWM_MAX 255
 
 class biWheel
 {
 	public:
-		biWheel(int in1, int in2, int in3, int in4);
+		biWheel(int, int, int, int);
 		void leftMotorForward();
 		void leftMotorBackward();
 		void leftMotorStop();
 		void rightMotorForward();
 		void rightMotorBackward();
 		void rightMotorStop();
-		void leftMotorForwardPWM(int spdl);
-		void leftMotorBackwardPWM(int spdl);
-		void rightMotorForwardPWM(int spdr);
-		void rightMotorBackwardPWM(int spdr);
-		void drive(boolean mtr, int spd);
-		void leftMotor(int spdl);
-		void rightMotor(int spdr);
-    
+		void leftMotorForwardPWM(int);
+		void leftMotorBackwardPWM(int);
+		void rightMotorForwardPWM(int);
+		void rightMotorBackwardPWM(int);
+		void drive(int, int);
+		void leftMotor(int);
+		void rightMotor(int);
+
 	private:
-    		int _in1;
-    		int _in2;
-    		int _in3;
-    		int _in4;
+		int _in1;
+		int _in2;
+		int _in3;
+		int _in4;
 		int _spdl;
 		int _spdr;
 		int _spd;
-		boolean _mtr;
+		int _mtr;
 
 };
 
