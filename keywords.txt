@@ -1,4 +1,15 @@
+#######################################
+# Syntax Coloring Map For BiWheel
+#######################################
+# Class
+#######################################
+
 biWheel	KEYWORD1
+
+#######################################
+# Methods
+#######################################
+
 leftMotorForward	KEYWORD2
 leftMotorBackward	KEYWORD2
 leftMotorStop	KEYWORD2
@@ -12,3 +23,18 @@ rightMotorBackwardPWM	KEYWORD2
 rightMotor	KEYWORD2
 leftMotor	KEYWORD2
 drive	KEYWORD2
+
+#######################################
+# Constants
+#######################################
+
+LM	LITERAL1
+RM	LITERAL1
+LRM	LITERAL1
+RLM	LITERAL1
+PWM_MIN	LITERAL1
+PWM_MAX	LITERAL1
+
+#######################################
+# End of file
+#######################################
