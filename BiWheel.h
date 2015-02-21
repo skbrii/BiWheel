@@ -63,4 +63,34 @@ class biWheel
 		int _mtr;
 };
 
+class biWheel6pin : biWheel
+{
+	public:
+		biWheel4pin(int, int, int, int, int, int);
+		inline int spdToPWMduty(int);
+		void leftMotorStop();
+		void rightMotorStop();
+		void leftMotorForwardPWM(int);
+		void leftMotorBackwardPWM(int);
+		void rightMotorForwardPWM(int);
+		void rightMotorBackwardPWM(int);
+		void leftMotor(int);
+		void rightMotor(int);
+		void drive(int, int);
+
+	private:
+		int _in1;
+		int _in2;
+		int _in3;
+		int _in4;
+		int _inpl;
+		int _inpr;
+
+
+		int _spdl;
+		int _spdr;
+		int _spd;
+		int _mtr;
+}
+
 #endif

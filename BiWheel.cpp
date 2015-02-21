@@ -130,3 +130,116 @@ void biWheel::drive(int mtr, int spd){
 	}
 	else return;
 }
+
+//biwheel6pin
+
+biWheel6pin::biwheel6pin(int in1, int in2, int in3, int in4, int inpl, int inpr)
+{
+	pinMode(in1, OUTPUT);
+	pinMode(in2, OUTPUT);
+	pinMode(in3, OUTPUT);
+	pinMode(in4, OUTPUT);
+	pinMode(inpl, OUTPUT);
+	pinMode(inpr, OUTPUT);
+
+
+	_in1 = in1;
+	_in2 = in2;
+	_in3 = in3;
+	_in4 = in4;
+	_inpl = inpl;
+	_inpr = inpr;
+}
+
+inline int biWheel6pin::spdToPWMduty(int spdtpwmdt){
+	return map(spdtpwmdt, 0, 100, PWM_MIN, PWM_MAX);
+}
+
+void biWheel6pin::leftMotorStop(){
+	digitalWrite(_in1, LOW);
+	digitalWrite(_in2, LOW);
+	digitalWrite(_spdl, LOW);
+}
+
+void biWheel6pin::rightMotorStop(){
+	digitalWrite(_in3, LOW);
+	digitalWrite(_in4, LOW);
+	digitalWrite(_spdr, LOW);
+}
+
+void biWheel6pin::leftMotorForwardPWM(int spdl){
+
+	_spdl = spdToPWMduty(spdl);
+
+	digitalWrite(_in1, HIGH);
+	digitalWrite(_in2, LOW);
+	analogWrite(_inpl, _spdl);
+}
+
+/*
+void biwheel6pin::leftMotorBackwardPWM(int spdl){
+
+	_spdl = spdToPWMduty(spdl);
+
+	digitalWrite(_in1, LOW);
+	analogWrite(_in2, _spdl);
+}
+
+void biwheel6pin::rightMotorForwardPWM(int spdr){
+
+	_spdr = spdToPWMduty(spdr);
+
+	digitalWrite(_in4, LOW);
+	analogWrite(_in3, _spdr);
+}
+
+void biwheel6pin::rightMotorBackwardPWM(int spdr){
+
+	_spdr = spdToPWMduty(spdr);
+
+	digitalWrite(_in3, LOW);
+	analogWrite(_in4, _spdr);
+}
+
+void biwheel6pin::leftMotor(int spdl){
+	if ( spdl == 0 ){
+		leftMotorStop();
+	}
+	else if ( spdl > 0 ){
+		leftMotorForwardPWM(spdl);
+	}
+	else {
+		leftMotorBackwardPWM(abs(spdl));
+	}
+}
+
+void biwheel6pin::rightMotor(int spdr){
+	if ( spdr == 0 ){
+		rightMotorStop();
+	}
+	else if ( spdr > 0 ){
+		rightMotorForwardPWM(spdr);
+	}
+	else {
+		rightMotorBackwardPWM(abs(spdr));
+	}
+}
+
+void biwheel6pin::drive(int mtr, int spd){
+
+	_mtr = mtr;
+	_spd = spd;
+
+	if ( _mtr == 0 ){
+		rightMotor(_spd);
+	}
+	else if ( _mtr == 1 ){
+		leftMotor(_spd);
+	}
+	else if ( _mtr == 2 ){
+		leftMotor(_spd);
+		rightMotor(_spd);
+	}
+	else return;
+}
+*/
