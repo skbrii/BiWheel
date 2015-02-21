@@ -30,7 +30,7 @@
 #include <Arduino.h>
 #include "BiWheel.h"
 
-biWheel::biWheel(int in1, int in2, int in3, int in4)
+BiWheel4pin::BiWheel4pin(int in1, int in2, int in3, int in4):BiWheel()
 {
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
@@ -43,21 +43,21 @@ biWheel::biWheel(int in1, int in2, int in3, int in4)
 	_in4 = in4;
 }
 
-inline int biWheel::spdToPWMduty(int spdtpwmdt){
+inline int BiWheel4pin::spdToPWMduty(int spdtpwmdt){
 	return map(spdtpwmdt, 0, 100, PWM_MIN, PWM_MAX);
 }
 
-void biWheel::leftMotorStop(){
+void BiWheel4pin::leftMotorStop(){
 	digitalWrite(_in1, LOW);
 	digitalWrite(_in2, LOW);
 }
 
-void biWheel::rightMotorStop(){
+void BiWheel4pin::rightMotorStop(){
 	digitalWrite(_in3, LOW);
 	digitalWrite(_in4, LOW);
 }
 
-void biWheel::leftMotorForwardPWM(int spdl){
+void BiWheel4pin::leftMotorForwardPWM(int spdl){
 
 	_spdl = spdToPWMduty(spdl);
 
@@ -65,7 +65,7 @@ void biWheel::leftMotorForwardPWM(int spdl){
 	analogWrite(_in1, _spdl);
 }
 
-void biWheel::leftMotorBackwardPWM(int spdl){
+void BiWheel4pin::leftMotorBackwardPWM(int spdl){
 
 	_spdl = spdToPWMduty(spdl);
 
@@ -73,7 +73,7 @@ void biWheel::leftMotorBackwardPWM(int spdl){
 	analogWrite(_in2, _spdl);
 }
 
-void biWheel::rightMotorForwardPWM(int spdr){
+void BiWheel4pin::rightMotorForwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
@@ -81,7 +81,7 @@ void biWheel::rightMotorForwardPWM(int spdr){
 	analogWrite(_in3, _spdr);
 }
 
-void biWheel::rightMotorBackwardPWM(int spdr){
+void BiWheel4pin::rightMotorBackwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
@@ -89,7 +89,7 @@ void biWheel::rightMotorBackwardPWM(int spdr){
 	analogWrite(_in4, _spdr);
 }
 
-void biWheel::leftMotor(int spdl){
+void BiWheel4pin::leftMotor(int spdl){
 	if ( spdl == 0 ){
 		leftMotorStop();
 	}
@@ -101,7 +101,7 @@ void biWheel::leftMotor(int spdl){
 	}
 }
 
-void biWheel::rightMotor(int spdr){
+void BiWheel4pin::rightMotor(int spdr){
 	if ( spdr == 0 ){
 		rightMotorStop();
 	}
@@ -113,7 +113,7 @@ void biWheel::rightMotor(int spdr){
 	}
 }
 
-void biWheel::drive(int mtr, int spd){
+void BiWheel4pin::drive(int mtr, int spd){
 
 	_mtr = mtr;
 	_spd = spd;
@@ -131,9 +131,9 @@ void biWheel::drive(int mtr, int spd){
 	else return;
 }
 
-//biwheel6pin
+//BiWheel6pin
 
-biWheel6pin::biWheel6pin(int in1, int in2, int in3, int in4, int inpl, int inpr)
+BiWheel6pin::BiWheel6pin(int in1, int in2, int in3, int in4, int inpl, int inpr):BiWheel()
 {
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
@@ -151,23 +151,23 @@ biWheel6pin::biWheel6pin(int in1, int in2, int in3, int in4, int inpl, int inpr)
 	_inpr = inpr;
 }
 
-inline int biWheel6pin::spdToPWMduty(int spdtpwmdt){
+inline int BiWheel6pin::spdToPWMduty(int spdtpwmdt){
 	return map(spdtpwmdt, 0, 100, PWM_MIN, PWM_MAX);
 }
 
-void biWheel6pin::leftMotorStop(){
+void BiWheel6pin::leftMotorStop(){
 	digitalWrite(_in1, LOW);
 	digitalWrite(_in2, LOW);
 	digitalWrite(_spdl, LOW);
 }
 
-void biWheel6pin::rightMotorStop(){
+void BiWheel6pin::rightMotorStop(){
 	digitalWrite(_in3, LOW);
 	digitalWrite(_in4, LOW);
 	digitalWrite(_spdr, LOW);
 }
 
-void biWheel6pin::leftMotorForwardPWM(int spdl){
+void BiWheel6pin::leftMotorForwardPWM(int spdl){
 
 	_spdl = spdToPWMduty(spdl);
 
@@ -177,7 +177,7 @@ void biWheel6pin::leftMotorForwardPWM(int spdl){
 }
 
 
-void biwheel6pin::leftMotorBackwardPWM(int spdl){
+void BiWheel6pin::leftMotorBackwardPWM(int spdl){
 
 	_spdl = spdToPWMduty(spdl);
 
@@ -187,7 +187,7 @@ void biwheel6pin::leftMotorBackwardPWM(int spdl){
 }
 
 
-void biwheel6pin::rightMotorForwardPWM(int spdr){
+void BiWheel6pin::rightMotorForwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
@@ -197,7 +197,7 @@ void biwheel6pin::rightMotorForwardPWM(int spdr){
 }
 
 
-void biwheel6pin::rightMotorBackwardPWM(int spdr){
+void BiWheel6pin::rightMotorBackwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
@@ -207,7 +207,7 @@ void biwheel6pin::rightMotorBackwardPWM(int spdr){
 }
 
 
-void biwheel6pin::leftMotor(int spdl){
+void BiWheel6pin::leftMotor(int spdl){
 	if ( spdl == 0 ){
 		leftMotorStop();
 	}
@@ -220,7 +220,7 @@ void biwheel6pin::leftMotor(int spdl){
 }
 
 
-void biwheel6pin::rightMotor(int spdr){
+void BiWheel6pin::rightMotor(int spdr){
 	if ( spdr == 0 ){
 		rightMotorStop();
 	}
@@ -232,7 +232,7 @@ void biwheel6pin::rightMotor(int spdr){
 	}
 }
 
-void biwheel6pin::drive(int mtr, int spd){
+void BiWheel6pin::drive(int mtr, int spd){
 
 	_mtr = mtr;
 	_spd = spd;

@@ -37,36 +37,25 @@
 #define LRM 2
 #define RLM 2
 
-class biWheel
+class BiWheel
 {
 	public:
-		biWheel(int, int, int, int);
-		inline int spdToPWMduty(int);
-		void leftMotorStop();
-		void rightMotorStop();
-		void leftMotorForwardPWM(int);
-		void leftMotorBackwardPWM(int);
-		void rightMotorForwardPWM(int);
-		void rightMotorBackwardPWM(int);
-		void leftMotor(int);
-		void rightMotor(int);
-		void drive(int, int);
-
-	private:
-		int _in1;
-		int _in2;
-		int _in3;
-		int _in4;
-		int _spdl;
-		int _spdr;
-		int _spd;
-		int _mtr;
+		virtual inline int spdToPWMduty(int);
+		virtual void leftMotorStop();
+		virtual void rightMotorStop();
+		virtual void leftMotorForwardPWM(int);
+		virtual void leftMotorBackwardPWM(int);
+		virtual void rightMotorForwardPWM(int);
+		virtual void rightMotorBackwardPWM(int);
+		virtual void leftMotor(int);
+		virtual void rightMotor(int);
+		virtual void drive(int, int);
 };
 
-class biWheel6pin : biWheel
+class BiWheel4pin : public BiWheel
 {
 	public:
-		biWheel4pin(int, int, int, int, int, int);
+		BiWheel4pin(int, int, int, int);
 		inline int spdToPWMduty(int);
 		void leftMotorStop();
 		void rightMotorStop();
@@ -91,6 +80,37 @@ class biWheel6pin : biWheel
 		int _spdr;
 		int _spd;
 		int _mtr;
-}
+};
+
+
+class BiWheel6pin : public BiWheel
+{
+	public:
+		BiWheel6pin(int, int, int, int, int, int);
+		inline int spdToPWMduty(int);
+		void leftMotorStop();
+		void rightMotorStop();
+		void leftMotorForwardPWM(int);
+		void leftMotorBackwardPWM(int);
+		void rightMotorForwardPWM(int);
+		void rightMotorBackwardPWM(int);
+		void leftMotor(int);
+		void rightMotor(int);
+		void drive(int, int);
+
+	private:
+		int _in1;
+		int _in2;
+		int _in3;
+		int _in4;
+		int _inpl;
+		int _inpr;
+
+
+		int _spdl;
+		int _spdr;
+		int _spd;
+		int _mtr;
+};
 
 #endif
