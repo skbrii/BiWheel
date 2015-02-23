@@ -77,16 +77,16 @@ void biWheel::rightMotorForwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
-	digitalWrite(_in3, LOW);
-	analogWrite(_in4, _spdr);
+	digitalWrite(_in4, LOW);
+	analogWrite(_in3, _spdr);
 }
 
 void biWheel::rightMotorBackwardPWM(int spdr){
 
 	_spdr = spdToPWMduty(spdr);
 
-	digitalWrite(_in4, LOW);
-	analogWrite(_in3, _spdr);
+	digitalWrite(_in3, LOW);
+	analogWrite(_in4, _spdr);
 }
 
 void biWheel::leftMotor(int spdl){
