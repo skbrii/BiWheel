@@ -34,6 +34,7 @@ LRM	LITERAL1
 RLM	LITERAL1
 PWM_MIN	LITERAL1
 PWM_MAX	LITERAL1
+SIX_PIN_MODE	LITERAL1
 
 #######################################
 # End of file
