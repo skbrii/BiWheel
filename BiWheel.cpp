@@ -41,6 +41,23 @@ biWheel::biWheel(int in1, int in2, int in3, int in4)
 	_in2 = in2;
 	_in3 = in3;
 	_in4 = in4;
+
+}
+
+biWheel::biWheel(int in1, int in2, int in3, int in4, int ena, int enb)
+{
+	pinMode(in1, OUTPUT);
+	pinMode(in2, OUTPUT);
+	pinMode(in3, OUTPUT);
+	pinMode(in4, OUTPUT);
+
+	_in1 = in1;
+	_in2 = in2;
+	_in3 = in3;
+	_in4 = in4;
+	_ena = ena;
+	_enb = enb;
+
 }
 
 inline int biWheel::spdToPWMduty(int spdtpwmdt){
@@ -62,7 +79,13 @@ void biWheel::leftMotorForwardPWM(int spdl){
 	_spdl = spdToPWMduty(spdl);
 
 	digitalWrite(_in2, LOW);
+
+#if SIX_PIN_MODE
 	analogWrite(_in1, _spdl);
+#elif
+	digitalWrite(_in1, HIGH);
+	analogWrite(_ena, _spdl);
+#endif /* SIX_PIN_MODE */
 }
 
 void biWheel::leftMotorBackwardPWM(int spdl){
@@ -70,7 +93,13 @@ void biWheel::leftMotorBackwardPWM(int spdl){
 	_spdl = spdToPWMduty(spdl);
 
 	digitalWrite(_in1, LOW);
+
+#if SIX_PIN_MODE
 	analogWrite(_in2, _spdl);
+#elif
+	digitalWrite(_in2, HIGH);
+	analogWrite(_ena, _spdl);
+#endif /* SIX_PIN_MODE */
 }
 
 void biWheel::rightMotorForwardPWM(int spdr){

@@ -41,6 +41,7 @@ class biWheel
 {
 	public:
 		biWheel(int, int, int, int);
+		biWheel(int, int, int, int, int, int);
 		inline int spdToPWMduty(int);
 		void leftMotorStop();
 		void rightMotorStop();
@@ -61,6 +62,8 @@ class biWheel
 		int _spdr;
 		int _spd;
 		int _mtr;
+		int _ena;
+		int _enb;
 };
 
 #endif
