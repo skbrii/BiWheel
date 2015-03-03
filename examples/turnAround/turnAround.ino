@@ -2,7 +2,7 @@
 
 #include "BiWheel.h"
 
-#define SIX_PIN_MODE
+
 
 // создание объекта для шасси
 // аргументы - цифровые пины Arduino,

@@ -30,7 +30,7 @@
 #include <Arduino.h>
 #include "BiWheel.h"
 
-
+#define SIX_PIN_MODE
 
 #ifdef SIX_PIN_MODE
 	biWheel::biWheel(int in1, int in2, int in3, int in4, int ena, int enb)
