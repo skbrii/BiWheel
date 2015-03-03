@@ -69,8 +69,9 @@ void biWheel::leftMotorBackwardPWM(int spdl){
 
 	_spdl = spdToPWMduty(spdl);
 
-	digitalWrite(_in1, LOW);
-	analogWrite(_in2, _spdl);
+	digitalWrite(_in1,LOW);
+	digitalWrite(_in2, HIGH);
+	analogWrite(_in1, 255-_spdl);
 }
 
 void biWheel::rightMotorForwardPWM(int spdr){
@@ -86,7 +87,8 @@ void biWheel::rightMotorBackwardPWM(int spdr){
 	_spdr = spdToPWMduty(spdr);
 
 	digitalWrite(_in3, LOW);
-	analogWrite(_in4, _spdr);
+	digitalWrite(_in4, HIGH);
+	analogWrite(_in3, 255-_spdr);
 }
 
 void biWheel::leftMotor(int spdl){
