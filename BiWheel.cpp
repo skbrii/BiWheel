@@ -9,7 +9,7 @@
 @ e-mail: dubkov@skbrii.ru
 @ April 24, 2014
 
-@ Last update: Feb 17, 2015
+@ Last update: Jan 17, 2016
 @ by Ilya S. Dubkov
 
 @ License information:
@@ -113,20 +113,11 @@ void biWheel::rightMotor(int spdr){
 	}
 }
 
-void biWheel::drive(int mtr, int spd){
+void biWheel::drive(int spdl, int spdr){
 
-	_mtr = mtr;
-	_spd = spd;
+	_spdl = spdl;
+	_spdr = spdr;
 
-	if ( _mtr == 0 ){
-		rightMotor(_spd);
-	}
-	else if ( _mtr == 1 ){
-		leftMotor(_spd);
-	}
-	else if ( _mtr == 2 ){
-		leftMotor(_spd);
-		rightMotor(_spd);
-	}
-	else return;
+	leftMotor(_spdl);
+	rightMotor(_spdr);
 }

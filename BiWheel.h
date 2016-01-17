@@ -9,7 +9,7 @@
 @ e-mail: dubkov@skbrii.ru
 @ April 24, 2014
 
-@ Last update: Feb 17, 2015
+@ Last update: Jan 17, 2016
 @ by Ilya S. Dubkov
 
 @ License information:
@@ -31,11 +31,6 @@
 
 #define PWM_MIN 150
 #define PWM_MAX 255
-
-#define LM 0
-#define RM 1
-#define LRM 2
-#define RLM 2
 
 class biWheel
 {
@@ -59,8 +54,6 @@ class biWheel
 		int _in4;
 		int _spdl;
 		int _spdr;
-		int _spd;
-		int _mtr;
 };
 
 #endif
