@@ -1,59 +1,69 @@
-/*
+/**
 
-@ Filename: BiWheel.h
+ BiWheel is an Arduino library for chassis with two motors
+ driven by L293 or L298 H-bridge.
 
-@ BiWheel is an Arduino library for chassis with two motors
-@ driven by L293 or L298 H-bridge.
+ @ Filename: BiWheel.h
+ @ Repository: https://github.com/skbrii/BiWheel
 
-@ Created by Ilya S. Dubkov
-@ e-mail: dubkov@skbrii.ru
-@ April 24, 2014
+ @ Created by Ilya S. Dubkov (dubkov@skbrii.ru)
+ @ Licensed under MIT X11 License
 
-@ Last update: Jan 17, 2016
-@ by Ilya S. Dubkov
+ */
 
-@ License information:
-
-@ This library is free software; you can redistribute it and/or
-@ modify it under the terms of the GNU Lesser General Public
-@ License as published by the Free Software Foundation; either
-@ version 2.1 of the License, or (at your option) any later version.
-
-@ This library is distributed in the hope that it will be useful,
-@ but WITHOUT ANY WARRANTY; without even the implied warranty of
-@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-@ Lesser General Public License for more details.
-
-*/
+#include <stdint.h>
 
 #ifndef BiWheel_h
 #define BiWheel_h
 
-#define PWM_MIN 150
-#define PWM_MAX 255
+class BiWheel {
 
-class biWheel
-{
 	public:
-		biWheel(int, int, int, int);
-		inline int spdToPWMduty(int);
+
+		// Speed on left motor
+		int8_t speedLeft;
+
+		// Speed on right motor
+		int8_t speedRight;
+
+		// Constructor with default PWM limits
+		BiWheel(uint8_t, uint8_t, uint8_t, uint8_t);
+
+		// Constructor with custom PWM limits
+		BiWheel(uint8_t, uint8_t, uint8_t, uint8_t, uint16_t, uint16_t);
+
+		// Speed to duty conversion
+		uint16_t speedToPWMDuty(int8_t);
+
+		// Left motor stop
 		void leftMotorStop();
+
+		// Right motor stop
 		void rightMotorStop();
-		void leftMotorForwardPWM(int);
-		void leftMotorBackwardPWM(int);
-		void rightMotorForwardPWM(int);
-		void rightMotorBackwardPWM(int);
-		void leftMotor(int);
-		void rightMotor(int);
-		void drive(int, int);
+
+		// Set speed on left motor
+		void leftMotor(int8_t);
+
+		// Set speed on right motor
+		void rightMotor(int8_t);
+
+		// Set speeds for each motors
+		void drive(int8_t, int8_t);
 
 	private:
-		int _in1;
-		int _in2;
-		int _in3;
-		int _in4;
-		int _spdl;
-		int _spdr;
+
+		// Minimal PWM duty (speed = 0)
+		uint16_t _PWM_MIN;
+
+		// Maximum PWM duty (speed = 100)
+		uint16_t _PWM_MAX;
+
+		// Pins on H-bridge
+		uint8_t _IN1;
+		uint8_t _IN2;
+		uint8_t _IN3;
+		uint8_t _IN4;
+
 };
 
 #endif

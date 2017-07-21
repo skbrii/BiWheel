@@ -1,123 +1,204 @@
-/*
+/**
 
-@ Filename: BiWheel.cpp
+ BiWheel is an Arduino library for chassis with two motors
+ driven by L293 or L298 H-bridge.
 
-@ BiWheel is an Arduino library for chassis with two motors
-@ driven by L293 or L298 H-bridge.
+ @ Filename: BiWheel.cpp
+ @ Repository: https://github.com/skbrii/BiWheel
 
-@ Created by Ilya S. Dubkov
-@ e-mail: dubkov@skbrii.ru
-@ April 24, 2014
+ @ Created by Ilya S. Dubkov (dubkov@skbrii.ru)
+ @ Licensed under MIT X11 License
 
-@ Last update: Jan 17, 2016
-@ by Ilya S. Dubkov
+ */
 
-@ License information:
-
-@ This library is free software; you can redistribute it and/or
-@ modify it under the terms of the GNU Lesser General Public
-@ License as published by the Free Software Foundation; either
-@ version 2.1 of the License, or (at your option) any later version.
-
-@ This library is distributed in the hope that it will be useful,
-@ but WITHOUT ANY WARRANTY; without even the implied warranty of
-@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-@ Lesser General Public License for more details.
-
-*/
-
-#include <stdlib.h>
 #include <Arduino.h>
 #include "BiWheel.h"
 
-biWheel::biWheel(int in1, int in2, int in3, int in4)
-{
+/**
+ * BiWheel constructor with default PWM ranges
+ * @param in1      IN1 pin on H-bridge
+ * @param in2      IN2 pin on H-bridge
+ * @param in3      IN3 pin on H-bridge
+ * @param in4      IN4 pin on H-bridge
+ */
+BiWheel::BiWheel(uint8_t in1, uint8_t in2, uint8_t in3, uint8_t in4) {
+
+	// Set pins as output
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
 	pinMode(in3, OUTPUT);
 	pinMode(in4, OUTPUT);
 
-	_in1 = in1;
-	_in2 = in2;
-	_in3 = in3;
-	_in4 = in4;
+	// Private pin defenitions
+	BiWheel::_IN1 = in1;
+	BiWheel::_IN2 = in2;
+	BiWheel::_IN3 = in3;
+	BiWheel::_IN4 = in4;
+
+	// Set default ranges
+	BiWheel::_PWM_MIN = 150;
+	BiWheel::_PWM_MAX = 250;
+
 }
 
-inline int biWheel::spdToPWMduty(int spdtpwmdt){
-	return map(spdtpwmdt, 0, 100, PWM_MIN, PWM_MAX);
+
+/**
+ * BiWheel constructor with different PWM ranges
+ * @param in1      IN1 pin on H-bridge
+ * @param in2      IN2 pin on H-bridge
+ * @param in3      IN3 pin on H-bridge
+ * @param in4      IN4 pin on H-bridge
+ * @param _PWM_MIN Minimum PWM value (default 150)
+ * @param _PWM_MAX Maximum PWM value (default 250)
+ */
+BiWheel::BiWheel(uint8_t in1, uint8_t in2, uint8_t in3, uint8_t in4, uint16_t _PWM_MIN = 150, uint16_t _PWM_MAX = 250) {
+
+	// Set pins as output
+	pinMode(in1, OUTPUT);
+	pinMode(in2, OUTPUT);
+	pinMode(in3, OUTPUT);
+	pinMode(in4, OUTPUT);
+
+	// Private pin defenitions
+	BiWheel::_IN1 = in1;
+	BiWheel::_IN2 = in2;
+	BiWheel::_IN3 = in3;
+	BiWheel::_IN4 = in4;
+
+	// Set PWM ranges
+	BiWheel::_PWM_MIN = _PWM_MIN;
+	BiWheel::_PWM_MAX = _PWM_MAX;
+
 }
 
-void biWheel::leftMotorStop(){
-	digitalWrite(_in1, LOW);
-	digitalWrite(_in2, LOW);
+
+/**
+ * Macros for converting speed to PWM duty value
+ * @param  spdtpwmdt Speed
+ * @return           PWM duty
+ */
+uint16_t BiWheel::speedToPWMDuty(int8_t speed){
+
+	return map(speed, 0, 100, _PWM_MIN, _PWM_MAX);
+
 }
 
-void biWheel::rightMotorStop(){
-	digitalWrite(_in3, LOW);
-	digitalWrite(_in4, LOW);
+
+/**
+ * Stopping the left motor
+ */
+void BiWheel::leftMotorStop() {
+
+	digitalWrite(_IN1, LOW);
+	digitalWrite(_IN2, LOW);
+
 }
 
-void biWheel::leftMotorForwardPWM(int spdl){
 
-	_spdl = spdToPWMduty(spdl);
+/**
+ * Stopping the right motor
+ */
+void BiWheel::rightMotorStop() {
 
-	digitalWrite(_in2, LOW);
-	analogWrite(_in1, _spdl);
+	digitalWrite(_IN3, LOW);
+	digitalWrite(_IN4, LOW);
+
 }
 
-void biWheel::leftMotorBackwardPWM(int spdl){
 
-	_spdl = spdToPWMduty(spdl);
+/**
+ * Set speed for left motor
+ * @param speed Speed (-100 ~ 100)
+ */
+void BiWheel::leftMotor(int8_t speed) {
 
-	digitalWrite(_in1, LOW);
-	analogWrite(_in2, _spdl);
-}
+	// Stop motor
+	if (speed == 0)  {
 
-void biWheel::rightMotorForwardPWM(int spdr){
+		// Stop motor
+		BiWheel::leftMotorStop();
 
-	_spdr = spdToPWMduty(spdr);
+		// Stop function execution
+		return;
 
-	digitalWrite(_in4, LOW);
-	analogWrite(_in3, _spdr);
-}
-
-void biWheel::rightMotorBackwardPWM(int spdr){
-
-	_spdr = spdToPWMduty(spdr);
-
-	digitalWrite(_in3, LOW);
-	analogWrite(_in4, _spdr);
-}
-
-void biWheel::leftMotor(int spdl){
-	if ( spdl == 0 ){
-		leftMotorStop();
 	}
-	else if ( spdl > 0 ){
-		leftMotorForwardPWM(spdl);
+
+	// Save speed to private variable
+	BiWheel::speedLeft = speed;
+
+	// Make conversion
+	uint16_t pwmDuty = BiWheel::speedToPWMDuty(abs(speed));
+
+	// Forward
+	if (speed > 0) {
+
+		analogWrite(_IN3, pwmDuty);
+		digitalWrite(_IN4, LOW);
+
 	}
+
+	// Backward
 	else {
-		leftMotorBackwardPWM(abs(spdl));
+
+		digitalWrite(_IN3, LOW);
+		analogWrite(_IN4, pwmDuty);
+
 	}
+
 }
 
-void biWheel::rightMotor(int spdr){
-	if ( spdr == 0 ){
-		rightMotorStop();
+
+/**
+ * Set speed for left motor
+ * @param speed Speed (-100 ~ 100)
+ */
+void BiWheel::rightMotor(int8_t speed) {
+
+	// Stop motor
+	if (speed == 0)  {
+
+		// Stop motor
+		BiWheel::rightMotorStop();
+
+		// Stop function execution
+		return;
+
 	}
-	else if ( spdr > 0 ){
-		rightMotorForwardPWM(spdr);
+
+	// Save speed to private variable
+	BiWheel::speedRight = speed;
+
+	// Make conversion
+	uint16_t pwmDuty = BiWheel::speedToPWMDuty(abs(speed));
+
+	// Forward
+	if (speed > 0) {
+
+		analogWrite(_IN1, pwmDuty);
+		digitalWrite(_IN2, LOW);
+
 	}
+
+	// Backward
 	else {
-		rightMotorBackwardPWM(abs(spdr));
+
+		digitalWrite(_IN1, LOW);
+		analogWrite(_IN2, pwmDuty);
+
 	}
+
 }
 
-void biWheel::drive(int spdl, int spdr){
 
-	_spdl = spdl;
-	_spdr = spdr;
+/**
+ * Set speed
+ * @param speedLeft  [description]
+ * @param speedRight [description]
+ */
+void BiWheel::drive(int8_t speedLeft, int8_t speedRight) {
 
-	leftMotor(_spdl);
-	rightMotor(_spdr);
+	// Apply speeds to motors
+	BiWheel::leftMotor(speedLeft);
+	BiWheel::rightMotor(speedRight);
+
 }
